@@ -1,0 +1,1 @@
+..\..\tcc.exe drawer.c && drawer.exe
