@@ -14,5 +14,6 @@ void get_cvag(int row, int col, double **data, double **gx, double **gy, double 
 void get_block(double **image, double **block, int block_n_row, int block_n_col, int pos_x, int pos_y);
 void read_csv(int row, int col, char *filename, double **data);
 void save_csv(int row, int col, char *filename, double **data);
+void print_csv(int row, int col, double **data);
 
 void mlp(double *x, double *x3);

@@ -51,3 +51,16 @@ void save_csv(int row, int col, char *filename, double **data){
     } 
     fclose(file); 
 }
+
+void print_csv(int row, int col, double **data){
+    //printf("Save_csv: row %d, col %d, filename %s.\n", row, col, filename);
+    printf("\n");
+    for (int i=0; i<row; i++) 
+    {
+        for (int j=0; j<col; j++)
+        {
+            printf("%f,", data[i][j]); 
+        }
+        printf("\n");        
+    }  
+}

@@ -26,13 +26,38 @@ void get_block(
     // printf("block copied.\n");
 }
 
+/**
+ * Function to check whether a file exists or not.
+ * It returns 1 if file exists at given path otherwise
+ * returns 0.
+ */
+int isFileExists(const char *path)
+{
+    // Try to open file
+    FILE *fptr = fopen(path, "r");
+
+    // If file does not exists 
+    if (fptr == NULL)
+        return 0;
+
+    // File exists hence close file and return true.
+    fclose(fptr);
+
+    return 1;
+}
+
+
 int main(int argc, char const *argv[])
 {
     char fname[256]; strcpy(fname, "0.csv");
-    if (argc == 1)
+    if (argc == 2)
     {
        strcpy(fname, argv[1]);
-    }   
+    }
+    if( isFileExists(fname) == 0 ) {
+        printf("File (%s) does not exists.\n", fname);
+        return 1;
+    }
     int row     = 192;
     int col     = 192;
 
@@ -57,10 +82,10 @@ int main(int argc, char const *argv[])
     // Global feature
     //printf("## Global Feature\n");
     double g_mean = get_mean(row, col, image);
-    //printf("G_MEAM is %f.\n", g_mean);
+    printf("G_MEAM is %f.\n", g_mean);
     
     double g_std = get_std(row, col, g_mean, image);
-    //printf("G_STD is %f.\n", g_std);
+    printf("G_STD is %f.\n", g_std);
 
     double **gx;
     gx = malloc(row * sizeof(double *));
@@ -75,13 +100,13 @@ int main(int argc, char const *argv[])
     get_gradient(row, col, image, gx, gy);
 
     double g_gx_mean = get_mean(row, col, gx);
-    //printf("G_GX_MEAM is %f.\n", g_gx_mean);
+    printf("G_GX_MEAM is %f.\n", g_gx_mean);
     double g_gy_mean = get_mean(row, col, gy);
-    //printf("G_GY_MEAM is %f.\n", g_gy_mean);
+    printf("G_GY_MEAM is %f.\n", g_gy_mean);
     double g_gx_std  = get_std(row, col, g_gx_mean, gx);
-    //printf("G_GX_STD  is %f.\n", g_gx_std);
+    printf("G_GX_STD  is %f.\n", g_gx_std);
     double g_gy_std  = get_std(row, col, g_gy_mean, gy);
-    //printf("G_GY_STD  is %f.\n", g_gy_std);
+    printf("G_GY_STD  is %f.\n", g_gy_std);
 
     // double g_contrast = get_contrast(g_mean, g_std);
     // printf("4. The global contrast is %f.\n", g_contrast);
@@ -176,6 +201,7 @@ int main(int argc, char const *argv[])
         block_feature);
     save_csv(block_cnt_y*block_cnt_x, n_categories, categories_fname,
         block_categories);
+    print_csv(block_cnt_y*block_cnt_x, n_categories, block_categories);
 
 
     // Global block-wise feature
