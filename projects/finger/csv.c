@@ -32,6 +32,7 @@ void read_csv(int row, int col, char *filename, double **data){
 }
 
 void save_csv(int row, int col, char *filename, double **data){
+    printf("Save_csv: row %d, col %d, filename %s.\n", row, col, filename);
     FILE *file;
     file = fopen(filename, "w");    
     if (file == NULL) 

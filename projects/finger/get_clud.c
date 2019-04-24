@@ -15,7 +15,7 @@ double get_clud(int row, int col, double **data, double img_mean, double thres_c
                     Dij += _get_sign(data[i][j], img_mean);
                 }
             }
-            printf("D[%d][%d] = %f\n", i, j, Dij);
+            //printf("D[%d][%d] = %f\n", i, j, Dij);
             clud += _get_sign(data[i][j], img_mean)*_get_sign(Dij, thres_clud);
         }
     }

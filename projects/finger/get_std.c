@@ -1,6 +1,6 @@
 #include <math.h>
 
-double get_std(int row, int col, double **data, double mean){
+double get_std(int row, int col, double mean, double **data){
     double sum = 0;
     double eps = 0.0001;
     for (int i=0; i<row; i++)
