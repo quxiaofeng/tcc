@@ -28,9 +28,14 @@ void get_block(
 
 int main(int argc, char const *argv[])
 {
+    char fname[256]; strcpy(fname, "0.csv");
+    if (argc == 1)
+    {
+       strcpy(fname, argv[1]);
+    }   
     int row     = 192;
     int col     = 192;
-    char fname[256]; strcpy(fname, "0.csv");
+
     int block_n_row = 16;
     int block_n_col = 16;
     int n_feature = 12;
@@ -163,8 +168,8 @@ int main(int argc, char const *argv[])
             block_feature[i * block_cnt_x + j][11] = block_gy_std;
             double categories[] = {0, 0, 0};
             mlp(block_feature[i * block_cnt_x + j], categories);
-            printf("The categories of block(%d, %d) is [%f, %f, %f].\n",
-                j, i, categories[0], categories[1], categories[2]);
+            //printf("The categories of block(%d, %d) is [%f, %f, %f].\n",
+            //    j, i, categories[0], categories[1], categories[2]);
         }
     }
     save_csv(block_cnt_y*block_cnt_x, n_feature, feature_fname,
