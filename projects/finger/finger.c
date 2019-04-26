@@ -136,6 +136,18 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < block_n_row; ++i)
         current_block[i] = malloc(block_n_col * sizeof(double));
 
+    double **block_gx;
+    block_gx = malloc(block_n_row * sizeof(double *));
+    for (int i = 0; i < block_n_row; ++i)
+        block_gx[i] = 
+            malloc(block_n_col * sizeof(double));
+
+    double **block_gy;
+    block_gy = malloc(block_n_row * sizeof(double *));
+    for (int i = 0; i < block_n_row; ++i)
+        block_gy[i] = 
+            malloc(block_n_col * sizeof(double));
+
     for (int i = 0; i < block_cnt_y; ++i)
     {
         for (int j = 0; j < block_cnt_x; ++j)
@@ -152,19 +164,10 @@ int main(int argc, char const *argv[])
                 block_n_row, block_n_col,
                 block_mean, current_block);
             //printf("B_STD is %f.\n", block_std);
-            double **block_gx;
-            block_gx = malloc(block_n_row * sizeof(double *));
-            for (int i = 0; i < block_n_row; ++i)
-                block_gx[i] = 
-                    malloc(block_n_col * sizeof(double));
-            double **block_gy;
-            block_gy = malloc(block_n_row * sizeof(double *));
-            for (int i = 0; i < block_n_row; ++i)
-                block_gy[i] = 
-                    malloc(block_n_col * sizeof(double));
-            get_gradient(
-                block_n_row, block_n_col, current_block,
-                block_gx, block_gy);
+            get_block(gx, block_gx,
+                block_n_row, block_n_col, j, i);
+            get_block(gy, block_gy,
+                block_n_row, block_n_col, j, i);
             double block_gx_mean = get_mean(
                 block_n_row, block_n_col, block_gx);
             //printf("B_GX_MEAM is %f.\n", block_gx_mean);
@@ -191,8 +194,7 @@ int main(int argc, char const *argv[])
             block_feature[i * block_cnt_x + j][9] = block_gy_mean;
             block_feature[i * block_cnt_x + j][10] = block_gx_std;
             block_feature[i * block_cnt_x + j][11] = block_gy_std;
-            double categories[] = {0, 0, 0};
-            mlp(block_feature[i * block_cnt_x + j], categories);
+            mlp(block_feature[i * block_cnt_x + j], block_categories[i * block_cnt_x + j]);
             //printf("The categories of block(%d, %d) is [%f, %f, %f].\n",
             //    j, i, categories[0], categories[1], categories[2]);
         }
